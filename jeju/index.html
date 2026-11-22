@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>수달 & 해달의 제주 대작전</title>
+<title>수달 & 해달의 IBK 리부트 제주 플랜</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
 <style>
@@ -2411,7 +2411,13 @@ function drawTitle(t) {
   txt('수달 & 해달의', 0, -6, 38, '#fff', 'center', TITLE_FONT, '#1d3557', 9);
   ctx.restore();
   ctx.save(); ctx.translate(W / 2, 165); const sc = 1 + Math.sin(t * 2.5) * 0.02; ctx.scale(sc, sc);
-  txt('제주 대작전', 0, 0, 96, '#ffd43b', 'center', TITLE_FONT, '#1d3557', 14);
+  // 제목이 길어져도 캔버스 좌우로 잘리지 않도록 실제 글자 폭을 재서 크기를 맞춘다
+  const mainTitle = 'IBK 리부트 제주 플랜';
+  let titleSize = 88, maxTitleW = W - 160;
+  ctx.font = titleSize + 'px ' + TITLE_FONT;
+  const titleW = ctx.measureText(mainTitle).width;
+  if (titleW > maxTitleW) titleSize = Math.max(48, Math.floor(titleSize * maxTitleW / titleW));
+  txt(mainTitle, 0, 0, titleSize, '#ffd43b', 'center', TITLE_FONT, '#1d3557', Math.max(7, Math.round(titleSize * 0.13)));
   ctx.restore();
   ctx.fillStyle = '#e8453c'; ctx.save(); ctx.translate(W / 2, 236); ctx.rotate(-0.02); rr(-150, -22, 300, 44, 8); ctx.fill(); ctx.strokeStyle = '#222'; ctx.lineWidth = 3; ctx.stroke();
   txt('제주의 신을 구하라!', 0, 1, 26, '#fff', 'center', TITLE_FONT); ctx.restore();
