@@ -176,12 +176,12 @@ const STAGES = [
             '이제 정말 끝이다. 제주의 다섯 신이 모두 돌아왔다!'] }
 ];
 const STORY = [
-  '제주에는 일만팔천 신이 산다.',
-  '그런데 어느 날 벼락거지가 된 제우스와 졸개들이 나타나',
-  '바람, 농사, 생명의 신을 가두고',
-  '제주를 만든 설문대할망마저 돌로 봉인했다.',
-  '함덕 바닷가의 수달과 해달이 일어선다.',
-  '다섯 신을 구하고 제주를 되찾아라!'
+  'IBK 차세대 리더분들, 제주도에는 무려 신이\n18,000이 넘는다는 것 아시나요?',
+  '그런데 어느 날, 벼락거지가 된 제우스와 졸개들이 나타났습니다.',
+  '바람, 농사, 생명의 신을 가두고,',
+  '제주를 만든 설문대할망마저 돌로 봉인했습니다.',
+  '이제 함덕 바닷가의 수달과 해달이 나섭니다.',
+  '다섯 신을 구하고 제주를 되찾아 주세요!'
 ];
 const POWERS = POWERS_;
 function has(i) { return !!G && i < 4 && i < G.st; }          // i번째 신을 이전 판에서 구했으면 그 힘을 쓴다
@@ -375,6 +375,18 @@ function wrap(s, maxW, size, font) {
   }
   if (line) out.push(line);
   return out;
+}
+// 띄어쓰기 단위로 끊는 줄바꿈 (낱말 중간에서 잘리지 않게). 한 낱말이 폭을 넘으면 글자 단위로 나눈다
+function wrapW(s, maxW, size, font) {
+  ctx.font = size + 'px ' + (font || BODY_FONT);
+  const out = []; let line = '';
+  for (const w of s.split(' ')) {
+    const t = line ? line + ' ' + w : w;
+    if (line && ctx.measureText(t).width > maxW) { out.push(line); line = w; }
+    else line = t;
+  }
+  if (line) out.push(line);
+  return out.reduce((a, l) => a.concat(ctx.measureText(l).width > maxW ? wrap(l, maxW, size, font) : [l]), []);
 }
 function button(x, y, w, h, label, fn, opt) {
   opt = opt || {};
@@ -2560,10 +2572,21 @@ function drawStory(t) {
   ctx.fillStyle = '#fffdf3'; rr(120, 50, 720, 440, 20); ctx.fill(); ctx.strokeStyle = '#222'; ctx.lineWidth = 5; ctx.stroke();
   ctx.fillStyle = '#e8453c'; rr(330, 30, 300, 50, 10); ctx.fill(); ctx.stroke();
   txt('이야기의 시작', W / 2, 56, 28, '#fff', 'center', TITLE_FONT);
-  STORY.forEach((l, i) => txt(l, W / 2, 125 + i * 44, 24, i === 5 ? '#e8453c' : '#222', 'center', i === 5 ? TITLE_FONT : BODY_FONT));
+  // 본문: 흰 패널(120~840) 안쪽 여백 안에서 줄바꿈하고, 버튼 위까지 들어오도록 글자 크기를 자동으로 맞춘다
+  const maxW = 640, top = 104, bottom = 386;
+  let size = 24, gap = 0, lines = [];
+  for (; size >= 18; size--) {
+    lines = [];
+    STORY.forEach((s, i) => s.split('\n').forEach(part => wrapW(part, maxW, size).forEach(l => lines.push([l, i === STORY.length - 1]))));
+    gap = Math.round(size * 1.5);
+    if (top + (lines.length - 1) * gap + size <= bottom) break;
+  }
+  const gapFinal = Math.min(Math.round(size * 1.85), Math.floor((bottom - top - size) / Math.max(1, lines.length - 1)));
+  const y0 = top + Math.max(0, (bottom - top - ((lines.length - 1) * gapFinal + size)) / 2) + size / 2;
+  lines.forEach((L, i) => txt(L[0], W / 2, y0 + i * gapFinal, size, L[1] ? '#e8453c' : '#222', 'center', L[1] ? TITLE_FONT : BODY_FONT));
   drawOtter('sudal', 210, 478, 86, { dir: 1, pose: 'idle', t });
   drawOtter('haedal', 760, 478, 82, { dir: -1, pose: 'idle', t: t + 1 });
-  button(W / 2 - 100, 400, 200, 56, '알겠어!', () => { storyOpen = false; save.seenStory = true; writeSave(); }, { size: 26 });
+  button(W / 2 - 110, 404, 220, 56, '알겠습니다!', () => { storyOpen = false; save.seenStory = true; writeSave(); }, { size: 26 });
   keyConfirm = () => { storyOpen = false; save.seenStory = true; writeSave(); };
 }
 function drawClear(t) {
