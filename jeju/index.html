@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>수달 & 해달의 IBK 리부트 제주 플랜</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Jua&display=swap" rel="stylesheet">
 <style>
   html,body{margin:0;padding:0;width:100%;height:100%;background:#0d2a3a;overflow:hidden;
     touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
@@ -24,7 +24,9 @@ const GROUND_TOP = 345, GROUND_BOT = 515;
 const cv = document.getElementById('c');
 const ctx = cv.getContext('2d');
 let scale = 1, rotated = false, dpr = 1;
-const TITLE_FONT = '"Black Han Sans", "Jua", sans-serif';
+// 제목 폰트: Black Han Sans는 쌍자음(싸·짜·까) 글리프가 스스로 교차하는 외곽선이라
+// iOS Safari 캔버스에서 겹치는 자리에 구멍이 뚫려 깨져 보였다. 외곽선이 깨끗한 Do Hyeon으로 교체.
+const TITLE_FONT = '"Do Hyeon", "Jua", sans-serif';
 const BODY_FONT = '"Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif';
 
 function resize() {
@@ -2475,8 +2477,8 @@ function drawSelect(t) {
   ctx.fillStyle = '#222'; ctx.fillRect(0, H - 90, W, 90);
   if (charKey) {
     txt(CHARS[charKey].name + ' 준비 완료!  필살기: ' + CHARS[charKey].special, 40, H - 45, 22, '#fff');
-    button(W - 230, H - 72, 190, 54, '지도로!', () => gotoMap(), { size: 28 });
-    keyConfirm = () => gotoMap();
+    button(W - 230, H - 72, 190, 54, '지도로!', () => gotoMap(true), { size: 28 });
+    keyConfirm = () => gotoMap(true);
   } else {
     txt('한 명을 골라 주세요  (← → 키로도 선택)', 40, H - 45, 22, '#fff');
     keyConfirm = null;
@@ -2485,10 +2487,12 @@ function drawSelect(t) {
   if (keys['arrowleft']) charKey = 'sudal';
   if (keys['arrowright']) charKey = 'haedal';
 }
-function gotoMap() {
+// showStory: 캐릭터 선택 화면의 '지도로!'로 게임에 들어올 때는 항상 이야기 팝업을 띄우고,
+// 스테이지 클리어·게임오버 등에서 지도로 돌아올 때는 띄우지 않는다.
+function gotoMap(showStory = false) {
   setScene('map');
   mapSel = Math.min(save.unlocked, 5) - 1;
-  storyOpen = !save.seenStory;
+  storyOpen = !!showStory;
 }
 function islandPath() {
   ctx.beginPath();
@@ -3184,7 +3188,16 @@ function frame(now) {
 }
 requestAnimationFrame(frame);
 
-Promise.all([loadSprites(), (document.fonts ? Promise.race([Promise.all([document.fonts.load('40px "Black Han Sans"'), document.fonts.load('20px "Jua"')]), new Promise(r => setTimeout(r, 2500))]) : Promise.resolve())])
+// 첫 화면이 시스템 폰트로 한 번 그려지지 않도록, 쓰는 글자가 들어간 견본으로 폰트를 미리 받아 둔다
+const FONT_SAMPLE = 'IBK 리부트 제주 플랜 누구로 싸울까? 이야기의 시작 알겠습니다! 출격! 지도로! · 함덕 해변 ' +
+  '수달 전사 해달 마법사 1판 다음 판으로 지도 보기 캐릭터 바꾸기 처음으로 소리 끄기 켜기 제주의 신을 구하라! ' +
+  'STAGE CLEAR! GAME OVER THE END 가나다라마바사아자차카타파하 짜 짝 까 께';  // 쌍자음 견본 포함
+function loadFonts() {
+  if (!document.fonts) return Promise.resolve();
+  const jobs = [document.fonts.load('40px "Do Hyeon"', FONT_SAMPLE), document.fonts.load('22px "Jua"', FONT_SAMPLE)];
+  return Promise.race([Promise.all(jobs).then(() => document.fonts.ready), new Promise(r => setTimeout(r, 3000))]);
+}
+Promise.all([loadSprites(), loadFonts()])
   .then(() => setScene('title'));
 </script>
 </body>
