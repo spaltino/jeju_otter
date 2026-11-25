@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fbf6ee">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<title>Country Presentation · France</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23fff' stroke='%232b4a8b' stroke-width='2'/%3E%3Crect x='4' y='4' width='18' height='56' rx='2' fill='%232b4a8b'/%3E%3Crect x='23' y='4' width='18' height='56' fill='%23f2f0ec'/%3E%3Crect x='42' y='4' width='18' height='56' rx='2' fill='%23c8535b'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --cream:#fbf6ee;
+    --card:#ffffff;
+    --ink:#25304a;
+    --ink-soft:#5d6780;
+    --blue:#2b4a8b;
+    --blue-soft:#e6edf9;
+    --red:#c8535b;
+    --red-soft:#fbe7E7;
+    --line:#eee3d4;
+    --gold:#e8b23a;
+    --shadow:0 2px 10px rgba(37,48,74,.07), 0 1px 2px rgba(37,48,74,.05);
+  }
+  *{box-sizing:border-box; -webkit-text-size-adjust:100%;}
+  html,body{margin:0; padding:0;}
+  body{
+    background:
+      radial-gradient(120% 60% at 50% 0%, #fffdf8 0%, var(--cream) 55%, #f6efe3 100%);
+    color:var(--ink);
+    font-family:-apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard",
+                "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif;
+    font-size:16px;
+    line-height:1.5;
+    overflow-x:hidden;
+    -webkit-tap-highlight-color: transparent;
+    padding:
+      calc(env(safe-area-inset-top, 0px) + 14px)
+      16px
+      calc(env(safe-area-inset-bottom, 0px) + 28px);
+  }
+  .wrap{max-width:430px; margin:0 auto;}
+
+  /* tricolor */
+  .flagbar{
+    display:flex; height:5px; border-radius:99px; overflow:hidden;
+    margin:0 0 18px;
+    box-shadow:0 1px 3px rgba(37,48,74,.10);
+  }
+  .flagbar i{flex:1;}
+  .flagbar i:nth-child(1){background:#39599b;}
+  .flagbar i:nth-child(2){background:#f4f1ea;}
+  .flagbar i:nth-child(3){background:#cf5f66;}
+
+  header{text-align:center; margin-bottom:16px;}
+  .eyebrow{
+    display:inline-block; font-size:11px; letter-spacing:.18em; font-weight:700;
+    color:var(--blue); background:var(--blue-soft);
+    padding:4px 10px; border-radius:99px; margin-bottom:8px;
+  }
+  h1{
+    font-size:25px; line-height:1.22; margin:0 0 6px;
+    font-weight:800; letter-spacing:-.02em;
+  }
+  h1 .fr{color:var(--red);}
+  .sub{font-size:13.5px; color:var(--ink-soft); margin:0;}
+
+  /* top controls */
+  .controls{margin:18px 0 20px; display:flex; flex-direction:column; gap:8px;}
+  .btn{
+    -webkit-appearance:none; appearance:none; border:0; cursor:pointer;
+    font-family:inherit; font-weight:800; border-radius:16px;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    width:100%; padding:15px 14px; font-size:16.5px; letter-spacing:-.01em;
+    transition:transform .08s ease, background .15s ease, opacity .15s ease;
+    touch-action:manipulation;
+  }
+  .btn:active{transform:scale(.977);}
+  .btn-main{background:var(--blue); color:#fff; box-shadow:0 6px 16px rgba(43,74,139,.26);}
+  .btn-main.is-playing{background:var(--red); box-shadow:0 6px 16px rgba(200,83,91,.26);}
+  .btn-ghost{
+    background:#fff; color:var(--blue); border:1.5px solid #dbe3f3;
+    font-size:14.5px; padding:11px 14px; font-weight:700;
+  }
+
+  /* cards */
+  ol.list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px;}
+  .card{
+    position:relative; background:var(--card); border-radius:20px;
+    border:1.5px solid var(--line);
+    box-shadow:var(--shadow);
+    padding:15px 16px 13px 52px;
+    transition:border-color .18s ease, box-shadow .18s ease, background .18s ease, transform .18s ease;
+  }
+  .card .num{
+    position:absolute; left:14px; top:15px;
+    width:26px; height:26px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:800;
+    background:var(--cream); color:var(--blue); border:1.5px solid #e7dccb;
+    transition:background .18s ease, color .18s ease, border-color .18s ease;
+  }
+  .en{
+    font-family:"Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
+    font-size:21px; line-height:1.28; font-weight:600; letter-spacing:.002em;
+    margin:0 0 7px; color:var(--ink);
+    overflow-wrap:break-word; word-break:break-word;
+  }
+  .ko{
+    margin:0 0 9px; font-size:13.5px; color:var(--ink-soft); line-height:1.45;
+    overflow-wrap:break-word;
+  }
+  .ko b{color:var(--blue); font-weight:700;}
+  .tip{
+    display:flex; gap:6px; align-items:flex-start;
+    background:#fdf7e8; border:1px solid #f3e6c6; border-radius:11px;
+    padding:7px 9px; margin:0 0 11px;
+    font-size:12.5px; line-height:1.42; color:#7a6326;
+  }
+  .tip .ic{flex:0 0 auto; line-height:1.42;}
+  .row{display:flex; gap:8px;}
+  .mini{
+    -webkit-appearance:none; appearance:none; border:0; cursor:pointer;
+    font-family:inherit; font-weight:700; font-size:13.5px;
+    flex:1 1 0; min-width:0; padding:10px 6px; border-radius:12px;
+    display:flex; align-items:center; justify-content:center; gap:5px;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    touch-action:manipulation; transition:transform .08s ease, background .15s ease;
+  }
+  .mini:active{transform:scale(.965);}
+  .mini.play{background:var(--blue-soft); color:var(--blue);}
+  .mini.slow{background:#f4f6fa; color:#6c7893;}
+  .mini.playing{background:var(--blue); color:#fff;}
+
+  .card.playing{
+    border-color:var(--blue);
+    background:linear-gradient(180deg,#f7faff 0%,#ffffff 100%);
+    box-shadow:0 6px 20px rgba(43,74,139,.16);
+  }
+  .card.playing .num{background:var(--blue); color:#fff; border-color:var(--blue);}
+  .card.playing .num::after{
+    content:""; position:absolute; inset:-4px; border-radius:50%;
+    border:2px solid rgba(43,74,139,.28); animation:pulse 1.3s ease-out infinite;
+  }
+  @keyframes pulse{
+    0%{transform:scale(.9); opacity:.9;}
+    100%{transform:scale(1.5); opacity:0;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .card.playing .num::after{animation:none;}
+    .btn:active, .mini:active, .card:active{transform:none;}
+  }
+
+  .foot{
+    margin-top:20px; padding:13px 15px;
+    background:#fffdf7; border:1.5px dashed #e9dcc4; border-radius:16px;
+    font-size:12.5px; line-height:1.55; color:#7b7460;
+  }
+  .foot b{color:#5d563f;}
+  .foot p{margin:0 0 6px;}
+  .foot p:last-child{margin:0;}
+
+  .toast{
+    position:fixed; left:50%; bottom:calc(env(safe-area-inset-bottom, 0px) + 18px);
+    transform:translate(-50%, 18px);
+    background:rgba(37,48,74,.94); color:#fff; font-size:13px; font-weight:600;
+    padding:10px 16px; border-radius:99px; max-width:88vw; text-align:center;
+    opacity:0; pointer-events:none; transition:opacity .2s ease, transform .2s ease;
+    z-index:50;
+  }
+  .toast.show{opacity:1; transform:translate(-50%,0);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="flagbar" aria-hidden="true"><i></i><i></i><i></i></div>
+
+  <header>
+    <span class="eyebrow">COUNTRY PRESENTATION</span>
+    <h1><span class="fr">France</span> 발표 연습</h1>
+    <p class="sub">버튼을 누르면 원어민 발음이 바로 나옵니다 · 5문장</p>
+  </header>
+
+  <div class="controls">
+    <button class="btn btn-main" id="allBtn" type="button">
+      <span id="allIcon" aria-hidden="true">▶</span><span id="allLabel">1~5번 전체 듣기</span>
+    </button>
+    <button class="btn btn-ghost" id="allSlowBtn" type="button">
+      <span aria-hidden="true">🐢</span><span>전체 천천히 듣기</span>
+    </button>
+  </div>
+
+  <ol class="list" id="list"></ol>
+
+  <div class="foot">
+    <p><b>💡 소리가 안 날 때</b> 아이폰 옆면 <b>무음 스위치</b>가 켜져 있으면 소리가 나지 않아요. 스위치를 끄고 다시 눌러 주세요.</p>
+    <p><b>🎧 팁</b> 처음 한 번은 소리 버튼을 눌러야 아이폰이 음성을 허용합니다. 또박또박 따라 읽어 보세요!</p>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var SENTENCES = [
+    {
+      en: "Let me tell you about France.",
+      ko: "렛 미 텔 유 어바웃 <b>프랜스</b>",
+      tip: "‘프랑스’가 아니라 ‘프랜스’ — 랜 에 힘을 주세요."
+    },
+    {
+      en: "The capital is Paris.",
+      ko: "더 <b>캐피털</b> 이즈 <b>패리스</b>",
+      tip: "‘파리’가 아니라 ‘패리스’. 캐피털과 이즈는 이어서 ‘캐피러리즈’처럼."
+    },
+    {
+      en: "People speak French there.",
+      ko: "<b>피플 스픽</b> 프렌취 <b>데어</b>",
+      tip: "French 끝은 세게 ‘치’ 말고 부드럽게 ‘프렌취~’."
+    },
+    {
+      en: "A landmark there is Eiffel Tower.",
+      ko: "어 <b>랜드마크</b> 데어 이즈 <b>아이펠 타워</b>",
+      tip: "‘에펠’이 아니라 ‘아이펠’. 앞에 the를 넣어 ‘디 아이펠 타워’로 읽어도 좋아요."
+    },
+    {
+      en: "You should try croissant.",
+      ko: "유 <b>슈드</b> 트라이 <b>크러싼트</b>",
+      tip: "should의 l은 소리 내지 않아요 → ‘슈드’. croissant은 ‘크와상’도 좋아요."
+    }
+  ];
+
+  var synth = window.speechSynthesis || null;
+  var listEl = document.getElementById("list");
+  var allBtn = document.getElementById("allBtn");
+  var allIcon = document.getElementById("allIcon");
+  var allLabel = document.getElementById("allLabel");
+  var allSlowBtn = document.getElementById("allSlowBtn");
+  var toastEl = document.getElementById("toast");
+
+  var cards = [];
+  var voices = [];
+  var playToken = 0;
+  var activeIndex = -1;
+  var toastTimer = null;
+
+  /* ---------- build cards ---------- */
+  SENTENCES.forEach(function (s, i) {
+    var li = document.createElement("li");
+    li.className = "card";
+    li.setAttribute("data-index", String(i));
+
+    var num = document.createElement("span");
+    num.className = "num";
+    num.textContent = String(i + 1);
+
+    var en = document.createElement("p");
+    en.className = "en";
+    en.lang = "en";
+    en.textContent = s.en;
+
+    var ko = document.createElement("p");
+    ko.className = "ko";
+    ko.innerHTML = s.ko;
+
+    var tip = document.createElement("p");
+    tip.className = "tip";
+    var ic = document.createElement("span");
+    ic.className = "ic";
+    ic.textContent = "💡";
+    var tipText = document.createElement("span");
+    tipText.textContent = s.tip;
+    tip.appendChild(ic);
+    tip.appendChild(tipText);
+
+    var row = document.createElement("div");
+    row.className = "row";
+
+    var playBtn = document.createElement("button");
+    playBtn.type = "button";
+    playBtn.className = "mini play";
+    playBtn.innerHTML = '<span aria-hidden="true">🔊</span><span>듣기 1.0x</span>';
+    playBtn.addEventListener("click", function (ev) {
+      ev.stopPropagation();
+      playOne(i, 1.0);
+    });
+
+    var slowBtn = document.createElement("button");
+    slowBtn.type = "button";
+    slowBtn.className = "mini slow";
+    slowBtn.innerHTML = '<span aria-hidden="true">🐢</span><span>천천히 0.7x</span>';
+    slowBtn.addEventListener("click", function (ev) {
+      ev.stopPropagation();
+      playOne(i, 0.7);
+    });
+
+    row.appendChild(playBtn);
+    row.appendChild(slowBtn);
+
+    li.appendChild(num);
+    li.appendChild(en);
+    li.appendChild(ko);
+    li.appendChild(tip);
+    li.appendChild(row);
+
+    /* tapping the sentence itself replays it */
+    li.addEventListener("click", function (ev) {
+      if (ev.target.closest("button")) return;
+      playOne(i, 1.0);
+    });
+
+    listEl.appendChild(li);
+    cards.push({ el: li, playBtn: playBtn, slowBtn: slowBtn });
+  });
+
+  /* ---------- voices ---------- */
+  function refreshVoices() {
+    if (!synth || typeof synth.getVoices !== "function") return;
+    var v = synth.getVoices() || [];
+    if (v.length) voices = v;
+  }
+  refreshVoices();
+  if (synth) {
+    if (typeof synth.addEventListener === "function") {
+      synth.addEventListener("voiceschanged", refreshVoices);
+    } else {
+      synth.onvoiceschanged = refreshVoices;
+    }
+  }
+
+  function pickVoice() {
+    var pool = voices.slice();
+    if (synth && typeof synth.getVoices === "function") {
+      var now = synth.getVoices() || [];
+      if (now.length) pool = now;
+    }
+    if (!pool.length) return null;
+    var wanted = [/^en[-_]US/i, /^en[-_]GB/i, /^en[-_]AU/i, /^en[-_]CA/i, /^en/i];
+    for (var w = 0; w < wanted.length; w++) {
+      for (var i = 0; i < pool.length; i++) {
+        var lang = pool[i].lang || "";
+        if (wanted[w].test(lang)) return pool[i];
+      }
+    }
+    return null;
+  }
+
+  /* ---------- ui helpers ---------- */
+  function showToast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toastEl.classList.remove("show");
+    }, 2600);
+  }
+
+  function setActive(index) {
+    activeIndex = index;
+    for (var i = 0; i < cards.length; i++) {
+      var on = i === index;
+      cards[i].el.classList.toggle("playing", on);
+      cards[i].playBtn.classList.toggle("playing", on);
+      cards[i].playBtn.setAttribute("aria-current", on ? "true" : "false");
+    }
+  }
+
+  function setAllPlaying(on) {
+    allBtn.classList.toggle("is-playing", on);
+    allIcon.textContent = on ? "⏹" : "▶";
+    allLabel.textContent = on ? "멈추기" : "1~5번 전체 듣기";
+    allSlowBtn.style.opacity = on ? ".45" : "1";
+    allSlowBtn.style.pointerEvents = on ? "none" : "auto";
+  }
+
+  function isSpeaking() {
+    return !!(synth && (synth.speaking || synth.pending));
+  }
+
+  /* cancel only when something is actually playing (iOS swallows a
+     speak() that follows an unconditional cancel) */
+  function quietDown() {
+    if (synth && isSpeaking()) {
+      try { synth.cancel(); } catch (e) {}
+    }
+  }
+
+  /* ---------- speaking ---------- */
+  var activeUtterance = null; /* keeps a strong ref: iOS GC drops queued utterances */
+
+  function makeUtterance(text, rate) {
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-US";
+    var v = pickVoice();
+    if (v) {
+      u.voice = v;
+      if (v.lang) u.lang = v.lang;
+    }
+    u.rate = Math.max(0.1, Math.min(2, rate));
+    u.pitch = 1;
+    u.volume = 1;
+    return u;
+  }
+
+  function playOne(index, rate) {
+    var s = SENTENCES[index];
+    if (!synth || typeof SpeechSynthesisUtterance === "undefined") {
+      showToast("이 브라우저에서는 음성 재생이 안 됩니다. Safari로 열어 주세요.");
+      return;
+    }
+    playToken++;
+    var my = playToken;
+    quietDown();
+    setAllPlaying(false);
+    setActive(index);
+
+    var u = makeUtterance(s.en, rate);
+    activeUtterance = u;
+
+    u.onend = function () {
+      if (my !== playToken) return;
+      setActive(-1);
+    };
+    u.onerror = function (e) {
+      if (my !== playToken) return;
+      /* "interrupted"/"canceled"는 우리가 끊은 것이므로 조용히 넘어감 */
+      if (e && (e.error === "interrupted" || e.error === "canceled")) return;
+      setActive(-1);
+      showToast("음성을 재생하지 못했어요. 다시 한 번 눌러 주세요.");
+    };
+
+    /* iOS: speak() must be called directly inside the tap handler */
+    synth.speak(u);
+  }
+
+  function playAll(rate) {
+    if (!synth || typeof SpeechSynthesisUtterance === "undefined") {
+      showToast("이 브라우저에서는 음성 재생이 안 됩니다. Safari로 열어 주세요.");
+      return;
+    }
+    playToken++;
+    var my = playToken;
+    quietDown();
+
+    var i = 0;
+    setAllPlaying(true);
+    setActive(0);
+
+    function step() {
+      if (my !== playToken) return;
+      if (i >= SENTENCES.length) {
+        setActive(-1);
+        setAllPlaying(false);
+        return;
+      }
+      var idx = i++;
+      var text = SENTENCES[idx].en;
+      var finished = false;
+      var watchdog = null;
+
+      setActive(idx);
+
+      var u = makeUtterance(text, rate);
+      activeUtterance = u;
+
+      function advance() {
+        if (finished) return;
+        finished = true;
+        if (watchdog) { clearTimeout(watchdog); watchdog = null; }
+        if (my !== playToken) return;
+        step();
+      }
+
+      u.onend = advance;
+      u.onerror = function (e) {
+        if (e && (e.error === "interrupted" || e.error === "canceled")) return;
+        advance();
+      };
+
+      /* 안전장치: iOS가 onend를 놓쳐도 다음 문장으로 넘어감 */
+      watchdog = setTimeout(function () {
+        if (finished || my !== playToken) return;
+        if (!synth.speaking) advance();
+      }, 2600 + text.length * 90);
+
+      synth.speak(u);
+    }
+
+    step(); /* first utterance starts inside the tap handler */
+  }
+
+  function stopAll() {
+    playToken++;
+    quietDown();
+    setActive(-1);
+    setAllPlaying(false);
+  }
+
+  /* ---------- wire top buttons ---------- */
+  allBtn.addEventListener("click", function () {
+    if (allBtn.classList.contains("is-playing")) {
+      stopAll();
+      return;
+    }
+    playAll(1.0);
+  });
+
+  allSlowBtn.addEventListener("click", function () {
+    playAll(0.7);
+  });
+
+  /* leaving the page stops audio */
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden && synth) {
+      playToken++;
+      try { synth.cancel(); } catch (e) {}
+    }
+  });
+
+  /* iOS may report voices only after the first interaction */
+  document.addEventListener("touchstart", refreshVoices, { passive: true, once: true });
+})();
+</script>
+</body>
+</html>
